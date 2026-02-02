@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RoleEnum } from '../enum/role.enum';
 import { UserInterface } from '../interface/user.interface';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { InfoUserComponent } from './info-user/info-user.component';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    InfoUserComponent,
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.less',
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   users: UserInterface[] = [
     {
       name: 'Jan',
@@ -41,6 +48,9 @@ export class UsersComponent {
     },
   ];
 
+  userLength: number = 0;
+  totalSalary: number = 0;
+
   displayedColumns: string[] = [
     'name',
     'surname',
@@ -56,5 +66,16 @@ export class UsersComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.userLength = this.users.length;
+    this.totalSalary = this.allSalary();
+  }
+
+  allSalary(): number {
+    return this.users.map((user) => user.salary).reduce((a, b) => a + b, 0);
   }
 }
