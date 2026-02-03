@@ -50,6 +50,7 @@ export class UsersComponent implements OnInit {
 
   userLength: number = 0;
   totalSalary: number = 0;
+  avgSalary: number | null = null;
 
   displayedColumns: string[] = [
     'name',
@@ -77,5 +78,9 @@ export class UsersComponent implements OnInit {
 
   allSalary(): number {
     return this.users.map((user) => user.salary).reduce((a, b) => a + b, 0);
+  }
+
+  onShowSalary(avgSalary: number): void {
+    this.avgSalary = avgSalary;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
@@ -11,4 +11,11 @@ import { MatCardModule } from '@angular/material/card';
 export class InfoUserComponent {
   @Input() userLength: number = 0;
   @Input() totalSalary: number = 0;
+
+  @Output()
+  avgSalary: EventEmitter<number> = new EventEmitter<number>();
+
+  showSalary(): void {
+    this.avgSalary.emit(this.totalSalary / this.userLength);
+  }
 }

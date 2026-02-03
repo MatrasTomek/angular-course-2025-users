@@ -59,5 +59,8 @@
   <app-info-user
     [userLength]="userLength"
     [totalSalary]="totalSalary"
+    (avgSalary)="onShowSalary($event)"
   ></app-info-user>
+
+  <div *ngIf="avgSalary">Average salary: {{ avgSalary }} Eur</div>
 </ng-template>
