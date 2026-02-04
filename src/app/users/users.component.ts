@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RoleEnum } from '../enum/role.enum';
 import { UserInterface } from '../interface/user.interface';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,8 @@ import { InfoUserComponent } from './info-user/info-user.component';
   styleUrl: './users.component.less',
 })
 export class UsersComponent implements OnInit {
+  @ViewChild('avgSalaryRef') avgSalaryRef!: InfoUserComponent;
+
   users: UserInterface[] = [
     {
       name: 'Jan',
@@ -76,11 +78,19 @@ export class UsersComponent implements OnInit {
     this.totalSalary = this.allSalary();
   }
 
+  ngAfterViewInit(): void {
+    this.avgSalaryRef.showSalary();
+  }
+
   allSalary(): number {
     return this.users.map((user) => user.salary).reduce((a, b) => a + b, 0);
   }
 
   onShowSalary(avgSalary: number): void {
     this.avgSalary = avgSalary;
+  }
+
+  showSalary(): void {
+    this.avgSalaryRef.showSalary();
   }
 }

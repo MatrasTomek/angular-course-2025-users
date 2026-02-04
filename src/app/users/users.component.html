@@ -57,10 +57,13 @@
   </table>
 
   <app-info-user
+    #avgSalaryRef
     [userLength]="userLength"
     [totalSalary]="totalSalary"
     (avgSalary)="onShowSalary($event)"
   ></app-info-user>
 
   <div *ngIf="avgSalary">Average salary: {{ avgSalary }} Eur</div>
+
+  <button (click)="showSalary()">Calc Av from parent</button>
 </ng-template>
